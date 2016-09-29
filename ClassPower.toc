@@ -1,0 +1,7 @@
+## Interface: 70000
+## Title: ClassPower
+## Author: Patrick Weaver
+## Version: v0.1
+## Notes: Display class specific power info, eg: holy power, combo points, etc.
+
+ClassPower.lua
