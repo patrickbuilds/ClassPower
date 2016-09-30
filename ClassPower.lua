@@ -23,8 +23,9 @@ end)
 local class, classID = select(2, UnitClass("player"))
 local color = RAID_CLASS_COLORS[class]
 
-local text = cpFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+local text = cpFrame:CreateFontString(nil, "OVERLAY")
 
+text:SetFont("Interface\\AddOns\\ClassPower\\Fonts\\MUNIRG__.TTF", 16)
 text:SetTextColor(color.r, color.g, color.b, 1)
 text:SetPoint("CENTER", 0, 0)
 
