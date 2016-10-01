@@ -24,8 +24,8 @@ local class, classID = select(2, UnitClass("player"))
 local color = RAID_CLASS_COLORS[class]
 
 local text = cpFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-local pointCharacter = 'X'
-local depletedCharacter = 'x'
+local activeCharacter = 'X'
+local depletedCharacter = '|cffa8a8a8'..activeCharacter..'|r'
 
 text:SetFont("Interface\\AddOns\\ClassPower\\Fonts\\MUNIRG__.TTF", 16)
 text:SetTextColor(color.r, color.g, color.b, 1)
@@ -77,7 +77,7 @@ local function UpdateText(self, event)
 
 	leftOver = maxPoints - pointCount
 
-	active = repeats(pointCharacter, pointCount)
+	active = repeats(activeCharacter, pointCount)
 	depleted = repeats(depletedCharacter, leftOver)
 
 	text:SetText(active..depleted)
