@@ -2,6 +2,14 @@ local ADDON, ClassPower = ...
 
 local cpFrame = CreateFrame("Frame", "cpFrame")
 
+local defaults = {
+	fontFace = "MUNIRG__.TTF",
+	fontSize = 16,
+	useBar = false,
+	barCharacter = 'X',
+	usedColor = 'a8a8a8'
+}
+
 cpFrame:SetPoint("CENTER", 0, 0)
 cpFrame:SetWidth(100)
 cpFrame:SetHeight(22)
@@ -10,24 +18,24 @@ cpFrame:SetMovable(true)
 cpFrame:SetUserPlaced(true)
 cpFrame:RegisterForDrag("LeftButton")
 
-cpFrame:SetScript("OnDragStart", function(self)
+cpFrame:SetScript("OnDragStart", function(ClassPower)
 	if IsShiftKeyDown() then
-		self:StartMoving()
+		ClassPower:StartMoving()
 	end
 end)
 
-cpFrame:SetScript("OnDragStop", function(self)
+cpFrame:SetScript("OnDragStop", function(ClassPower)
 	cpFrame:StopMovingOrSizing()
 end)
 
 local class, classID = select(2, UnitClass("player"))
 local color = RAID_CLASS_COLORS[class]
 
-local text = cpFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-local activeCharacter = 'X'
-local depletedCharacter = '|cffa8a8a8'..activeCharacter..'|r'
+local text = cpFrame:CreateFontString(nil, "OVERLAY")
+local activeCharacter = defaults.barCharacter
+local depletedCharacter = '|cff'..defaults.usedColor..activeCharacter..'|r'
 
-text:SetFont("Interface\\AddOns\\ClassPower\\Fonts\\MUNIRG__.TTF", 16)
+text:SetFont("Interface\\AddOns\\ClassPower\\Fonts\\"..defaults.fontFace, defaults.fontSize)
 text:SetTextColor(color.r, color.g, color.b, 1)
 text:SetPoint("CENTER", 0, 0)
 
@@ -37,7 +45,7 @@ local function repeats(s, n)
 	return n > 0 and s .. repeats(s, n-1) or ""
 end
 
-local function UpdateText(self, event)
+local function UpdateText(ClassPower, event)
 	if classID == 2 then
 		pointCount = UnitPower("player", 9)
 		maxPoints = 5
@@ -75,12 +83,16 @@ local function UpdateText(self, event)
 
  	end
 
-	leftOver = maxPoints - pointCount
+	if defaults.useBar == true then
+		leftOver = maxPoints - pointCount
 
-	active = repeats(activeCharacter, pointCount)
-	depleted = repeats(depletedCharacter, leftOver)
+		active = repeats(activeCharacter, pointCount)
+		depleted = repeats(depletedCharacter, leftOver)
 
-	text:SetText(active..depleted)
+		text:SetText(active..depleted)
+	else
+		text:SetText(pointCount)
+	end
 end
 
 cpFrame:SetScript("OnEvent", UpdateText)
