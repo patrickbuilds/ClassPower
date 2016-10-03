@@ -18,13 +18,13 @@ cpFrame:SetMovable(true)
 cpFrame:SetUserPlaced(true)
 cpFrame:RegisterForDrag("LeftButton")
 
-cpFrame:SetScript("OnDragStart", function(ClassPower)
+cpFrame:SetScript("OnDragStart", function(self)
 	if IsShiftKeyDown() then
-		ClassPower:StartMoving()
+		self:StartMoving()
 	end
 end)
 
-cpFrame:SetScript("OnDragStop", function(ClassPower)
+cpFrame:SetScript("OnDragStop", function(self)
 	cpFrame:StopMovingOrSizing()
 end)
 
@@ -45,7 +45,7 @@ local function repeats(s, n)
 	return n > 0 and s .. repeats(s, n-1) or ""
 end
 
-local function UpdateText(ClassPower, event)
+local function UpdateText(self, event)
 	if classID == 2 then
 		pointCount = UnitPower("player", 9)
 		maxPoints = 5
